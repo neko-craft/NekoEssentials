@@ -31,9 +31,12 @@ import java.util.WeakHashMap;
 @Command(name = "back", permission = "nekoess.back")
 @Command(name = "tpcancel")
 @Command(name = "home", permission = "nekoess.home")
+@Command(name = "mute", permission = "nekoess.mute")
+@Command(name = "othershome", permission = "nekoess.others")
 @Command(name = "sethome", permission = "nekoess.home")
 @Command(name = "spawn", permission = "nekoess.spawn")
 @Command(name = "sudo", permission = "nekoess.sudo")
+@Command(name = "toggle", permission = "nekoess.toggle")
 @Command(name = "tpaall", permission = "nekoess.tpaall")
 @Command(name = "tpaccept")
 @Command(name = "tpa", permission = "nekoess.tpa")
@@ -44,10 +47,12 @@ import java.util.WeakHashMap;
 @Permission(name = "nekoess.tpa", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.tphere", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.back", defaultValue = PermissionDefault.TRUE)
+@Permission(name = "nekoess.toggle", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.tpaall", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.others")
 @Permission(name = "nekoess.immediate")
 @Permission(name = "nekoess.sudo")
+@Permission(name = "nekoess.mute")
 @ApiVersion(ApiVersion.Target.v1_13)
 public final class Main extends JavaPlugin{
     public final WeakHashMap<Player, Pair<Integer, Location>> countdowns = new WeakHashMap<>();
@@ -75,9 +80,12 @@ public final class Main extends JavaPlugin{
                     BackCommand.class,
                     CancelCommand.class,
                     HomeCommand.class,
+                    MuteCommand.class,
+                    OthersHomeCommand.class,
                     SetHomeCommand.class,
                     SpawnCommand.class,
                     SudoCommand.class,
+                    ToggleCommand.class,
                     TpaAllCommand.class,
                     TpAcceptCommand.class,
                     TpaCommand.class,
