@@ -35,9 +35,9 @@ public final class Serializer {
     public static byte[] serializeLocation(Location loc) {
         final ByteBuf buf = createByteBuf();
         writeString(buf, loc.getWorld().getName());
-        buf.writeDouble(loc.getX());
-        buf.writeDouble(loc.getY());
-        buf.writeDouble(loc.getZ());
+        buf.writeInt(loc.getBlockX());
+        buf.writeInt(loc.getBlockY());
+        buf.writeInt(loc.getBlockZ());
         buf.writeFloat(loc.getYaw());
         buf.writeFloat(loc.getPitch());
         return byteBufToByteArray(buf);
@@ -46,9 +46,9 @@ public final class Serializer {
         final ByteBuf buf = Unpooled.wrappedBuffer(bytes);
         return new Location(
                 Bukkit.getWorld(readString(buf)),
-                buf.readDouble(),
-                buf.readDouble(),
-                buf.readDouble(),
+                buf.readInt(),
+                buf.readInt(),
+                buf.readInt(),
                 buf.readFloat(),
                 buf.readFloat()
         );

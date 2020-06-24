@@ -33,6 +33,7 @@ import java.util.WeakHashMap;
 @Command(name = "home", permission = "nekoess.home")
 @Command(name = "sethome", permission = "nekoess.home")
 @Command(name = "spawn", permission = "nekoess.spawn")
+@Command(name = "sudo", permission = "nekoess.sudo")
 @Command(name = "tpaall", permission = "nekoess.tpaall")
 @Command(name = "tpaccept")
 @Command(name = "tpa", permission = "nekoess.tpa")
@@ -46,6 +47,7 @@ import java.util.WeakHashMap;
 @Permission(name = "nekoess.tpaall", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.others")
 @Permission(name = "nekoess.immediate")
+@Permission(name = "nekoess.sudo")
 @ApiVersion(ApiVersion.Target.v1_13)
 public final class Main extends JavaPlugin{
     public final WeakHashMap<Player, Pair<Integer, Location>> countdowns = new WeakHashMap<>();
@@ -75,6 +77,7 @@ public final class Main extends JavaPlugin{
                     HomeCommand.class,
                     SetHomeCommand.class,
                     SpawnCommand.class,
+                    SudoCommand.class,
                     TpaAllCommand.class,
                     TpAcceptCommand.class,
                     TpaCommand.class,
@@ -95,7 +98,7 @@ public final class Main extends JavaPlugin{
                 if (--pair.left < 1) {
                     itor.remove();
                     final Location dest = pair.right;
-                    if (dest == null) return;
+                    if (dest == null) continue;
                     recordPlayerLocation(p);
                     p.teleport(dest);
                     p.sendActionBar("¡ìa´«ËÍ³É¹¦!");
