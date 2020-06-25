@@ -28,6 +28,7 @@ import java.util.WeakHashMap;
 @Description("An essential plugin used in NekoCraft.")
 @Author("Shirasawa")
 @Website("https://apisium.cn")
+@Command(name = "afk", permission = "nekoess.afk")
 @Command(name = "back", permission = "nekoess.back")
 @Command(name = "tpcancel")
 @Command(name = "home", permission = "nekoess.home")
@@ -42,6 +43,7 @@ import java.util.WeakHashMap;
 @Command(name = "tpa", permission = "nekoess.tpa")
 @Command(name = "tpdeny")
 @Command(name = "tphere", permission = "nekoess.tphere")
+@Permission(name = "nekoess.afk", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.spawn", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.home", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.tpa", defaultValue = PermissionDefault.TRUE)
@@ -77,6 +79,7 @@ public final class Main extends JavaPlugin{
         try {
             Utils.loadCommands(
                     this,
+                    AfkCommand.class,
                     BackCommand.class,
                     CancelCommand.class,
                     HomeCommand.class,
