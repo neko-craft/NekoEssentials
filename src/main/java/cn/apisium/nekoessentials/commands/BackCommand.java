@@ -18,7 +18,6 @@ public final class BackCommand extends TeleportCommand {
         if (bytes == null) sender.sendMessage("§c找不到上一个位置!");
         else {
             final Location location = Serializer.deserializeLocation(bytes);
-            p.sendMessage("back to: "+location.getBlockX()+", "+location.getBlockZ());
             instance.delayTeleport(p, location, now);
         }
     }
