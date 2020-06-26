@@ -2,7 +2,6 @@ package cn.apisium.nekoessentials.commands;
 
 import cn.apisium.nekoessentials.Main;
 import cn.apisium.nekoessentials.utils.Pair;
-import cn.apisium.nekoessentials.utils.Serializer;
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,9 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.PlayerInventory;
 
-import java.util.HashSet;
 import java.util.WeakHashMap;
 
 @CommandName("afk")
