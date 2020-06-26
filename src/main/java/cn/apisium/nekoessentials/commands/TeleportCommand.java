@@ -1,6 +1,7 @@
 package cn.apisium.nekoessentials.commands;
 
 import cn.apisium.nekoessentials.*;
+import cn.apisium.nekoessentials.utils.Utils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -17,7 +18,7 @@ public abstract class TeleportCommand extends BasicCommand {
                 doTeleport(sender, (Player) sender, false);
                 return true;
             case 1:
-                if (!instance.canTeleportOthers(sender)) return false;
+                if (!Utils.canTeleportOthers(sender)) return false;
                 final Player p = instance.getServer().getPlayerExact(args[0]);
                 if (p == null) sender.sendMessage(Constants.NO_SUCH_PLAYER);
                 else doTeleport(sender, p, true);

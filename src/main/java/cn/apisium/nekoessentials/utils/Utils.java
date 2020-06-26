@@ -7,7 +7,10 @@ import cn.apisium.nekoessentials.commands.CommandName;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 
 public final class Utils {
     private Utils() {}
@@ -38,5 +41,21 @@ public final class Utils {
         }
         final Block ground = feet.getRelative(BlockFace.DOWN);
         return !ground.getType().isSolid();
+    }
+
+    public static boolean canTeleportOthers(CommandSender who) {
+        return who.hasPermission("nekoess.others");
+    }
+
+    public static void teleportPlayer(Player player, Entity entity){ teleportPlayer(player, entity.getLocation()); }
+    public static void teleportPlayer(Player player, Location location){
+        final Location lastLocation = player.getLocation();
+        player.teleport(location);
+        recordPlayerLocation(player, lastLocation);
+    }
+
+    public static void recordPlayerLocation(Player player) { recordPlayerLocation(player, player.getLocation()); }
+    public static void recordPlayerLocation(Player player, Location loc) {
+        Main.getInstance().db.setPlayerData(player, "lastLocation", Serializer.serializeLocation(loc));
     }
 }

@@ -1,5 +1,6 @@
 package cn.apisium.nekoessentials;
 
+import cn.apisium.nekoessentials.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +21,6 @@ final class Events implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
-        instance.recordPlayerLocation(e.getEntity());
+        Utils.recordPlayerLocation(e.getEntity());
     }
 }

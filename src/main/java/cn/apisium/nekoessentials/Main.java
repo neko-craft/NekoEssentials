@@ -1,9 +1,7 @@
 package cn.apisium.nekoessentials;
 
 import cn.apisium.nekoessentials.commands.*;
-import cn.apisium.nekoessentials.utils.Pair;
-import cn.apisium.nekoessentials.utils.Serializer;
-import cn.apisium.nekoessentials.utils.Utils;
+import cn.apisium.nekoessentials.utils.*;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -59,22 +57,26 @@ import java.util.WeakHashMap;
 public final class Main extends JavaPlugin{
     public final WeakHashMap<Player, Pair<Integer, Location>> countdowns = new WeakHashMap<>();
     public final WeakHashMap<Player, Pair<Long, Runnable>> playerTasks = new WeakHashMap<>();
+    public static Main instance;
+    public DatabaseSingleton db = DatabaseSingleton.Database;
+    private DB _db;
     private final WeakHashMap<Player, Long> delays = new WeakHashMap<>();
     private BukkitTask countdownTask;
-    public DB db;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onEnable() {
+        instance = this;
         try {
             if (!getDataFolder().exists()) getDataFolder().mkdir();
-            db = Iq80DBFactory.factory.open(new File(getDataFolder(), "database"),
+            _db = Iq80DBFactory.factory.open(new File(getDataFolder(), "database"),
                     new Options().createIfMissing(true));
         } catch (IOException e) {
             e.printStackTrace();
             setEnabled(false);
             return;
         }
+        db.init(_db);
         getServer().getPluginManager().registerEvents(new Events(this), this);
         try {
             Utils.loadCommands(
@@ -110,8 +112,7 @@ public final class Main extends JavaPlugin{
                     itor.remove();
                     final Location dest = pair.right;
                     if (dest == null) continue;
-                    recordPlayerLocation(p);
-                    p.teleport(dest);
+                    Utils.teleportPlayer(p, dest);
                     p.sendActionBar("§a传送成功!");
                 } else p.sendActionBar("§e将在 §b" + pair.left + "秒 §e后进行传送!");
             }
@@ -124,7 +125,7 @@ public final class Main extends JavaPlugin{
         countdowns.clear();
         playerTasks.clear();
         try {
-            if (db != null) db.close();
+            if (db != null) _db.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -168,15 +169,6 @@ public final class Main extends JavaPlugin{
         return time != null && time > System.currentTimeMillis();
     }
 
-    public boolean canTeleportOthers(CommandSender who) {
-        return who.hasPermission("nekoess.others");
-    }
-
-    public void recordPlayerLocation(Player player) { recordPlayerLocation(player, player.getLocation()); }
-    public void recordPlayerLocation(Player player, Location loc) {
-        db.put((player.getUniqueId().toString() + ".lastLocation").getBytes(), Serializer.serializeLocation(loc));
-    }
-
     public Player getPlayer(CommandSender sender, String name) {
         final Player p = getServer().getPlayerExact(name);
         if (p == null) {
@@ -188,5 +180,9 @@ public final class Main extends JavaPlugin{
             return null;
         }
         return p;
+    }
+
+    public static Main getInstance(){
+        return instance;
     }
 }

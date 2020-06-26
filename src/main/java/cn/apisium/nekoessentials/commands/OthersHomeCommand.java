@@ -2,6 +2,7 @@ package cn.apisium.nekoessentials.commands;
 
 import cn.apisium.nekoessentials.Main;
 import cn.apisium.nekoessentials.utils.Serializer;
+import cn.apisium.nekoessentials.utils.Utils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -16,13 +17,12 @@ public final class OthersHomeCommand extends BasicCommand {
         if (!(sender instanceof Player) || args.length != 1) return false;
         final Player p = instance.getPlayer(sender, args[0]);
         if (p == null) return true;
-        final byte[] bytes = instance.db.get((p.getUniqueId().toString() + ".home").getBytes());
-        if (bytes == null) sender.sendMessage("Â§cè¯¥ç©å®¶è¿˜æ²¡æœ‰è®¾ç½®å®¶!");
+        final byte[] bytes = instance.db.getPlayerData(p,"home");
+        if (bytes == null) sender.sendMessage("¡ìc¸ÃÍæ¼Ò»¹Ã»ÓĞÉèÖÃ¼Ò!");
         else {
-            ((Player) sender).teleport(Serializer.deserializeLocation(bytes));
-            sender.sendMessage("Â§aä¼ é€æˆåŠŸ!");
+            Utils.teleportPlayer((Player) sender, Serializer.deserializeLocation(bytes));
+            sender.sendMessage("¡ìa´«ËÍ³É¹¦!");
         }
         return true;
     }
 }
-
