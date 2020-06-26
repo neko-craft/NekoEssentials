@@ -19,7 +19,7 @@ public final class SudoCommand extends BasicCommand {
         final Player p = instance.getPlayer(sender, args[0]);
         if (p == null) return true;
         sender.sendMessage(p.performCommand(StringUtils.join(
-                Arrays.copyOfRange(args, 1, args.length - 1))) ? "搂a鎵ц鎴愬姛!" : "搂a澶辫触鎴愬姛!");
+                Arrays.copyOfRange(args, 1, args.length - 1))) ? "§a执行成功!" : "§a失败成功!");
         return true;
     }
 }
