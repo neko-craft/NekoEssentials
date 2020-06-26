@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.iq80.leveldb.DB;
 import org.iq80.leveldb.WriteOptions;
 
+@SuppressWarnings("unused")
 public class DatabaseSingleton {
     private static final DatabaseSingleton INSTANCE = new DatabaseSingleton();
     private DB _db;

@@ -57,6 +57,7 @@ import java.util.WeakHashMap;
 public final class Main extends JavaPlugin {
     public final WeakHashMap<Player, Pair<Integer, Location>> countdowns = new WeakHashMap<>();
     public final WeakHashMap<Player, Pair<Long, Runnable>> playerTasks = new WeakHashMap<>();
+    @SuppressWarnings("CanBeFinal")
     public static Main INSTANCE;
     public DatabaseSingleton db = DatabaseSingleton.getInstance();
     private DB _db;
@@ -106,13 +107,13 @@ public final class Main extends JavaPlugin {
             return;
         }
         countdownTask = getServer().getScheduler().runTaskTimer(this, () -> {
-            final Iterator<Map.Entry<Player, Pair<Integer, Location>>> itor = countdowns.entrySet().iterator();
-            while (itor.hasNext()) {
-                final Map.Entry<Player, Pair<Integer, Location>> it = itor.next();
+            final Iterator<Map.Entry<Player, Pair<Integer, Location>>> iterator = countdowns.entrySet().iterator();
+            while (iterator.hasNext()) {
+                final Map.Entry<Player, Pair<Integer, Location>> it = iterator.next();
                 final Player p = it.getKey();
                 final Pair<Integer, Location> pair = it.getValue();
                 if (--pair.left < 1) {
-                    itor.remove();
+                    iterator.remove();
                     final Location dest = pair.right;
                     if (dest == null) continue;
                     Utils.teleportPlayer(p, dest);

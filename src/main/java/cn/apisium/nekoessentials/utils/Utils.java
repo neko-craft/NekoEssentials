@@ -12,6 +12,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+@SuppressWarnings("unused")
 public final class Utils {
     private Utils() {
     }

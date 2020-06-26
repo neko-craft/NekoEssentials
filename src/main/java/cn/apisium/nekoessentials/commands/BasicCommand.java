@@ -9,7 +9,7 @@ import org.bukkit.command.TabCompleter;
 import java.util.List;
 
 public abstract class BasicCommand implements CommandExecutor, TabCompleter {
-    public Main instance;
+    public final Main instance;
 
     public BasicCommand(Main main) {
         instance = main;
@@ -29,6 +29,7 @@ public abstract class BasicCommand implements CommandExecutor, TabCompleter {
 
     public abstract boolean callback(CommandSender sender, String[] args);
 
+    @SuppressWarnings({"unused", "SameReturnValue"})
     public List<String> tabComplete(CommandSender sender, String[] args) {
         return null;
     }
