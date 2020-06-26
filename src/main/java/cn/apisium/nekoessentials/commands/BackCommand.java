@@ -11,6 +11,7 @@ public final class BackCommand extends TeleportCommand {
         super(main);
     }
 
+    @Override
     public void doTeleport(CommandSender sender, Player p, boolean now) {
         final byte[] bytes = instance.db.get((p.getUniqueId().toString() + ".lastLocation").getBytes());
         if (bytes == null) sender.sendMessage("§c找不到上一个位置!");
