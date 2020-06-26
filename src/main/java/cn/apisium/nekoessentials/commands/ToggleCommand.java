@@ -30,7 +30,7 @@ public final class ToggleCommand extends BasicCommand {
                 p.setGameMode(GameMode.SURVIVAL);
                 break;
         }
-        p.sendActionBar("搂a妯″紡鍒囨崲鎴愬姛!");
+        p.sendActionBar("§a模式切换成功!");
         return true;
     }
 }
