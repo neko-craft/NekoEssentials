@@ -14,16 +14,15 @@ public final class ToggleCommand extends BasicCommand {
     public boolean callback(CommandSender sender, String[] args) {
        if (!(sender instanceof Player)) return false;
        final Player p = (Player) sender;
-       final byte[] key = (p.getUniqueId().toString() + ".toggleLocation").getBytes();
        switch (p.getGameMode()) {
            case SURVIVAL:
-               instance.db.put(key, Serializer.serializeLocation(p.getLocation()));
+               instance.db.setPlayerData(p,"toggleLocation", Serializer.serializeLocation(p.getLocation()));
                p.setGameMode(GameMode.SPECTATOR);
                break;
            case SPECTATOR:
-               final byte[] bytes = instance.db.get(key);
+               final byte[] bytes = instance.db.getPlayerData(p,"toggleLocation");
                if (bytes != null) {
-                   instance.db.delete(key);
+                   instance.db.deletePlayerData(p,"toggleLocation");
                    p.teleport(Serializer.deserializeLocation(bytes));
                }
                p.setGameMode(GameMode.SURVIVAL);
