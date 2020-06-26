@@ -3,16 +3,12 @@ package cn.apisium.nekoessentials.utils;
 import io.netty.buffer.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-//import org.bukkit.util.io.BukkitObjectOutputStream;
-//
-//import java.io.ByteArrayOutputStream;
-//import java.io.IOException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public final class Serializer {
     private Serializer() {}
-    public static ByteBuf createByteBuf() { return ByteBufAllocator.DEFAULT.heapBuffer(); }
+    public static ByteBuf createByteBuf() { return Unpooled.buffer(); }
     public static byte[] byteBufToByteArray(ByteBuf buf) {
         if (buf.hasArray()) return buf.array();
         final byte[] bytes = new byte[buf.readableBytes()];
