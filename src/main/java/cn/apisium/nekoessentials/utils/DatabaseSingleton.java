@@ -4,11 +4,18 @@ import org.bukkit.entity.Player;
 import org.iq80.leveldb.DB;
 import org.iq80.leveldb.WriteOptions;
 
-public enum DatabaseSingleton {
-    Database;
-    DB _db;
+public class DatabaseSingleton {
+    private static final DatabaseSingleton INSTANCE = new DatabaseSingleton();
+    private DB _db;
+
+    private DatabaseSingleton(){}
+
     public void init(DB _db){
         this._db = _db;
+    }
+
+    public static DatabaseSingleton getInstance(){
+        return INSTANCE;
     }
 
     public byte[] getPlayerData(Player player, String key){

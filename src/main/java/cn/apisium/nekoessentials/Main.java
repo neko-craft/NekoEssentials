@@ -58,7 +58,7 @@ public final class Main extends JavaPlugin{
     public final WeakHashMap<Player, Pair<Integer, Location>> countdowns = new WeakHashMap<>();
     public final WeakHashMap<Player, Pair<Long, Runnable>> playerTasks = new WeakHashMap<>();
     public static Main instance;
-    public DatabaseSingleton db = DatabaseSingleton.Database;
+    public DatabaseSingleton db = DatabaseSingleton.getInstance();
     private DB _db;
     private final WeakHashMap<Player, Long> delays = new WeakHashMap<>();
     private BukkitTask countdownTask;
