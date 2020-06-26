@@ -17,7 +17,7 @@ public final class OthersHomeCommand extends BasicCommand {
         if (!(sender instanceof Player) || args.length != 1) return false;
         final Player p = instance.getPlayer(sender, args[0]);
         if (p == null) return true;
-        final byte[] bytes = instance.db.getPlayerData(p,"home");
+        final byte[] bytes = instance.db.getPlayerData(p, "home");
         if (bytes == null) sender.sendMessage("§c该玩家还没有设置家!");
         else {
             Utils.teleportPlayer((Player) sender, Serializer.deserializeLocation(bytes));

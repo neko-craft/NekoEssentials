@@ -17,6 +17,7 @@ import java.util.HashSet;
 public final class MuteCommand extends BasicCommand implements Listener {
     private final HashSet<String> set;
     private final static String MUTED_LIST = "mutedList";
+
     @SuppressWarnings("unchecked")
     public MuteCommand(Main main) {
         super(main);
@@ -42,26 +43,26 @@ public final class MuteCommand extends BasicCommand implements Listener {
     @SuppressWarnings("deprecation")
     @Override
     public boolean callback(CommandSender sender, String[] args) {
-       if (args.length != 1) return false;
-       final OfflinePlayer o = instance.getServer().getOfflinePlayer(args[0]);
-       if (!o.hasPlayedBefore()) {
-           sender.sendMessage("§c该玩家还从未在服务器游玩过!");
-           return true;
-       }
-       final String id = o.getUniqueId().toString();
-       final Player p = o.getPlayer();
-       if (set.contains(id)) {
-           set.remove(id);
-           if (p != null) p.sendMessage("§a您已被解除禁言!");
-       } else {
-           set.add(id);
-           if (p != null) p.sendMessage("§c您已被禁言!");
-       }
-       try {
-           instance.db.set(MUTED_LIST, Serializer.serializeObject(set));
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
-       return true;
+        if (args.length != 1) return false;
+        final OfflinePlayer o = instance.getServer().getOfflinePlayer(args[0]);
+        if (!o.hasPlayedBefore()) {
+            sender.sendMessage("§c该玩家还从未在服务器游玩过!");
+            return true;
+        }
+        final String id = o.getUniqueId().toString();
+        final Player p = o.getPlayer();
+        if (set.contains(id)) {
+            set.remove(id);
+            if (p != null) p.sendMessage("§a您已被解除禁言!");
+        } else {
+            set.add(id);
+            if (p != null) p.sendMessage("§c您已被禁言!");
+        }
+        try {
+            instance.db.set(MUTED_LIST, Serializer.serializeObject(set));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

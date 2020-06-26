@@ -13,9 +13,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public final class Utils {
-    private Utils() {}
+    private Utils() {
+    }
+
     @SafeVarargs
-    public static void loadCommands (Main main, Class<? extends BasicCommand> ...commands) throws Exception {
+    public static void loadCommands(Main main, Class<? extends BasicCommand>... commands) throws Exception {
         for (Class<? extends BasicCommand> it : commands) {
             final CommandName name = it.getAnnotation(CommandName.class);
             assert name != null;
@@ -47,14 +49,20 @@ public final class Utils {
         return who.hasPermission("nekoess.others");
     }
 
-    public static void teleportPlayer(Player player, Entity entity){ teleportPlayer(player, entity.getLocation()); }
-    public static void teleportPlayer(Player player, Location location){
+    public static void teleportPlayer(Player player, Entity entity) {
+        teleportPlayer(player, entity.getLocation());
+    }
+
+    public static void teleportPlayer(Player player, Location location) {
         final Location lastLocation = player.getLocation();
         player.teleport(location);
         recordPlayerLocation(player, lastLocation);
     }
 
-    public static void recordPlayerLocation(Player player) { recordPlayerLocation(player, player.getLocation()); }
+    public static void recordPlayerLocation(Player player) {
+        recordPlayerLocation(player, player.getLocation());
+    }
+
     public static void recordPlayerLocation(Player player, Location loc) {
         Main.getInstance().db.setPlayerData(player, "lastLocation", Serializer.serializeLocation(loc));
     }

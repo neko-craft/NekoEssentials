@@ -20,6 +20,7 @@ import java.util.WeakHashMap;
 public final class AfkCommand extends TeleportCommand implements Listener {
     private final int TIME = 5 * 60 * 1000;
     private final WeakHashMap<Player, Pair<Location, Long>> map = new WeakHashMap<>();
+
     public AfkCommand(Main main) {
         super(main);
         main.getServer().getScheduler().runTaskTimer(main, (Runnable) this::syncStatus, 100, 100);
@@ -43,20 +44,42 @@ public final class AfkCommand extends TeleportCommand implements Listener {
         if (e.getPlayer().getInventory().getItemInMainHand().getType() != Material.FISHING_ROD)
             renewStatus(e.getPlayer());
     }
+
     @EventHandler
-    public void onSwap(PlayerSwapHandItemsEvent e) { renewStatus(e.getPlayer()); }
+    public void onSwap(PlayerSwapHandItemsEvent e) {
+        renewStatus(e.getPlayer());
+    }
+
     @EventHandler
-    public void onRespawn(PlayerPostRespawnEvent e) { renewStatus(e.getPlayer()); }
+    public void onRespawn(PlayerPostRespawnEvent e) {
+        renewStatus(e.getPlayer());
+    }
+
     @EventHandler
-    public void onHeld(PlayerItemHeldEvent e) { renewStatus(e.getPlayer()); }
+    public void onHeld(PlayerItemHeldEvent e) {
+        renewStatus(e.getPlayer());
+    }
+
     @EventHandler
-    public void onDrop(PlayerDropItemEvent e) { renewStatus(e.getPlayer()); }
+    public void onDrop(PlayerDropItemEvent e) {
+        renewStatus(e.getPlayer());
+    }
+
     @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent e) { renewStatus(e.getPlayer()); }
+    public void onCommand(PlayerCommandPreprocessEvent e) {
+        renewStatus(e.getPlayer());
+    }
+
     @EventHandler
-    public void onChat(AsyncPlayerChatEvent e) { renewStatus(e.getPlayer()); }
+    public void onChat(AsyncPlayerChatEvent e) {
+        renewStatus(e.getPlayer());
+    }
+
     @EventHandler
-    public void onRespawn(PlayerFishEvent e) { renewStatus(e.getPlayer()); }
+    public void onRespawn(PlayerFishEvent e) {
+        renewStatus(e.getPlayer());
+    }
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         renewStatus(e.getPlayer());
@@ -74,6 +97,7 @@ public final class AfkCommand extends TeleportCommand implements Listener {
     private void syncStatus(final Player p) {
         syncStatus(p, System.currentTimeMillis());
     }
+
     private void syncStatus(final Player p, final long time) {
         Pair<Location, Long> it = map.get(p);
         final Location loc = p.getLocation();
@@ -97,6 +121,7 @@ public final class AfkCommand extends TeleportCommand implements Listener {
             }
         }
     }
+
     private void syncStatus() {
         final long time = System.currentTimeMillis();
         instance.getServer().getOnlinePlayers().forEach(p -> syncStatus(p, time));

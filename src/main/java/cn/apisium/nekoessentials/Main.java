@@ -54,7 +54,7 @@ import java.util.WeakHashMap;
 @Permission(name = "nekoess.sudo")
 @Permission(name = "nekoess.mute")
 @ApiVersion(ApiVersion.Target.v1_13)
-public final class Main extends JavaPlugin{
+public final class Main extends JavaPlugin {
     public final WeakHashMap<Player, Pair<Integer, Location>> countdowns = new WeakHashMap<>();
     public final WeakHashMap<Player, Pair<Long, Runnable>> playerTasks = new WeakHashMap<>();
     public static Main instance;
@@ -133,7 +133,10 @@ public final class Main extends JavaPlugin{
         countdownTask = null;
     }
 
-    public void delayTeleport(final Player player, final Location loc) { delayTeleport(player, loc, false); }
+    public void delayTeleport(final Player player, final Location loc) {
+        delayTeleport(player, loc, false);
+    }
+
     public void delayTeleport(final Player player, Location loc, final boolean now) {
         if (now || !shouldPlayerBeDelayed(player, loc)) {
             countdowns.put(player, new Pair<>(1, loc));
@@ -182,7 +185,7 @@ public final class Main extends JavaPlugin{
         return p;
     }
 
-    public static Main getInstance(){
+    public static Main getInstance() {
         return instance;
     }
 }

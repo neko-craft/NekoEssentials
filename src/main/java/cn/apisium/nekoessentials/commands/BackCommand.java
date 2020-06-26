@@ -14,7 +14,7 @@ public final class BackCommand extends TeleportCommand {
 
     @Override
     public void doTeleport(CommandSender sender, Player p, boolean now) {
-        final byte[] bytes = instance.db.getPlayerData(p,"lastLocation");
+        final byte[] bytes = instance.db.getPlayerData(p, "lastLocation");
         if (bytes == null) sender.sendMessage("§c找不到上一个位置!");
         else {
             final Location location = Serializer.deserializeLocation(bytes);
