@@ -13,7 +13,7 @@ public final class HomeCommand extends TeleportCommand {
 
     @Override
     public void doTeleport(CommandSender sender, Player p, boolean now) {
-        final byte[] bytes = instance.db.get((p.getUniqueId().toString() + ".home").getBytes());
+        final byte[] bytes = instance.db.getPlayerData(p, "home");
         if (bytes == null) sender.sendMessage("§c你还没有设置家!");
         else instance.delayTeleport(p, Serializer.deserializeLocation(bytes), now);
     }

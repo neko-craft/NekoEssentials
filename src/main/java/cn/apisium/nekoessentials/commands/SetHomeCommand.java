@@ -15,7 +15,7 @@ public final class SetHomeCommand extends BasicCommand {
     public boolean callback(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) return false;
         final Player p = (Player) sender;
-        instance.db.put((p.getUniqueId().toString() + ".home").getBytes(), Serializer.serializeLocation(p.getLocation()));
+        instance.db.setPlayerData(p, ".home", Serializer.serializeLocation(p.getLocation()));
         p.sendMessage("°Ïa≥…π¶…Ë÷√!");
         return true;
     }

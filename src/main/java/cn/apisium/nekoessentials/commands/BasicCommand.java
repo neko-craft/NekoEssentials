@@ -10,9 +10,11 @@ import java.util.List;
 
 public abstract class BasicCommand implements CommandExecutor, TabCompleter {
     public Main instance;
-    public BasicCommand (Main main) {
+
+    public BasicCommand(Main main) {
         instance = main;
     }
+
     @SuppressWarnings("NullableProblems")
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -26,6 +28,7 @@ public abstract class BasicCommand implements CommandExecutor, TabCompleter {
     }
 
     public abstract boolean callback(CommandSender sender, String[] args);
+
     public List<String> tabComplete(CommandSender sender, String[] args) {
         return null;
     }

@@ -16,7 +16,8 @@ import java.util.HashSet;
 @CommandName("mute")
 public final class MuteCommand extends BasicCommand implements Listener {
     private final HashSet<String> set;
-    private final static byte[] MUTED_LIST = "mutedList".getBytes();
+    private final static String MUTED_LIST = "mutedList";
+
     @SuppressWarnings("unchecked")
     public MuteCommand(Main main) {
         super(main);
@@ -35,33 +36,33 @@ public final class MuteCommand extends BasicCommand implements Listener {
     public void onChat(AsyncPlayerChatEvent e) {
         if (set.contains(e.getPlayer().getUniqueId().toString())) {
             e.setCancelled(true);
-            e.getPlayer().sendActionBar("Â§cå‘é€å¤±è´¥! æ‚¨å·²è¢«ç¦è¨€!");
+            e.getPlayer().sendActionBar("¡ìc·¢ËÍÊ§°Ü! ÄúÒÑ±»½ûÑÔ!");
         }
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public boolean callback(CommandSender sender, String[] args) {
-       if (args.length != 1) return false;
-       final OfflinePlayer o = instance.getServer().getOfflinePlayer(args[0]);
-       if (!o.hasPlayedBefore()) {
-           sender.sendMessage("Â§cè¯¥ç©å®¶è¿˜ä»æœªåœ¨æœåŠ¡å™¨æ¸¸ç©è¿‡!");
-           return true;
-       }
-       final String id = o.getUniqueId().toString();
-       final Player p = o.getPlayer();
-       if (set.contains(id)) {
-           set.remove(id);
-           if (p != null) p.sendMessage("Â§aæ‚¨å·²è¢«è§£é™¤ç¦è¨€!");
-       } else {
-           set.add(id);
-           if (p != null) p.sendMessage("Â§cæ‚¨å·²è¢«ç¦è¨€!");
-       }
-       try {
-           instance.db.put(MUTED_LIST, Serializer.serializeObject(set));
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
-       return true;
+        if (args.length != 1) return false;
+        final OfflinePlayer o = instance.getServer().getOfflinePlayer(args[0]);
+        if (!o.hasPlayedBefore()) {
+            sender.sendMessage("¡ìc¸ÃÍæ¼Ò»¹´ÓÎ´ÔÚ·şÎñÆ÷ÓÎÍæ¹ı!");
+            return true;
+        }
+        final String id = o.getUniqueId().toString();
+        final Player p = o.getPlayer();
+        if (set.contains(id)) {
+            set.remove(id);
+            if (p != null) p.sendMessage("¡ìaÄúÒÑ±»½â³ı½ûÑÔ!");
+        } else {
+            set.add(id);
+            if (p != null) p.sendMessage("¡ìcÄúÒÑ±»½ûÑÔ!");
+        }
+        try {
+            instance.db.set(MUTED_LIST, Serializer.serializeObject(set));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

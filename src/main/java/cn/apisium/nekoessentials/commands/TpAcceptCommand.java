@@ -22,7 +22,7 @@ public final class TpAcceptCommand extends BasicCommand {
                 return true;
             }
         }
-        sender.sendMessage("§当前没有进行中的传送任务!");
+        sender.sendMessage("§c当前没有进行中的传送任务!");
         return true;
     }
 }

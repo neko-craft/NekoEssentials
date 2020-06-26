@@ -8,28 +8,29 @@ import org.bukkit.entity.Player;
 
 @CommandName("toggle")
 public final class ToggleCommand extends BasicCommand {
-    public ToggleCommand(Main main) { super(main); }
+    public ToggleCommand(Main main) {
+        super(main);
+    }
 
     @Override
     public boolean callback(CommandSender sender, String[] args) {
-       if (!(sender instanceof Player)) return false;
-       final Player p = (Player) sender;
-       final byte[] key = (p.getUniqueId().toString() + ".toggleLocation").getBytes();
-       switch (p.getGameMode()) {
-           case SURVIVAL:
-               instance.db.put(key, Serializer.serializeLocation(p.getLocation()));
-               p.setGameMode(GameMode.SPECTATOR);
-               break;
-           case SPECTATOR:
-               final byte[] bytes = instance.db.get(key);
-               if (bytes != null) {
-                   instance.db.delete(key);
-                   p.teleport(Serializer.deserializeLocation(bytes));
-               }
-               p.setGameMode(GameMode.SURVIVAL);
-               break;
-       }
-       p.sendActionBar("§a模式切换成功!");
-       return true;
+        if (!(sender instanceof Player)) return false;
+        final Player p = (Player) sender;
+        switch (p.getGameMode()) {
+            case SURVIVAL:
+                instance.db.setPlayerData(p, "toggleLocation", Serializer.serializeLocation(p.getLocation()));
+                p.setGameMode(GameMode.SPECTATOR);
+                break;
+            case SPECTATOR:
+                final byte[] bytes = instance.db.getPlayerData(p, "toggleLocation");
+                if (bytes != null) {
+                    instance.db.deletePlayerData(p, "toggleLocation");
+                    p.teleport(Serializer.deserializeLocation(bytes));
+                }
+                p.setGameMode(GameMode.SURVIVAL);
+                break;
+        }
+        p.sendActionBar("§a模式切换成功!");
+        return true;
     }
 }

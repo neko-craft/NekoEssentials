@@ -1,5 +1,6 @@
 package cn.apisium.nekoessentials;
 
+import cn.apisium.nekoessentials.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,9 +10,11 @@ import org.bukkit.event.player.PlayerMoveEvent;
 @SuppressWarnings("unused")
 final class Events implements Listener {
     final private Main instance;
+
     Events(Main main) {
         instance = main;
     }
+
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
         final Player p = e.getPlayer();
@@ -20,6 +23,6 @@ final class Events implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
-        instance.recordPlayerLocation(e.getEntity());
+        Utils.recordPlayerLocation(e.getEntity());
     }
 }
