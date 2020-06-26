@@ -64,6 +64,6 @@ public final class Utils {
     }
 
     public static void recordPlayerLocation(Player player, Location loc) {
-        Main.getInstance().db.setPlayerData(player, "lastLocation", Serializer.serializeLocation(loc));
+        Main.INSTANCE.db.setPlayerData(player, "lastLocation", Serializer.serializeLocation(loc));
     }
 }

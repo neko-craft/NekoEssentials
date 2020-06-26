@@ -57,16 +57,19 @@ import java.util.WeakHashMap;
 public final class Main extends JavaPlugin {
     public final WeakHashMap<Player, Pair<Integer, Location>> countdowns = new WeakHashMap<>();
     public final WeakHashMap<Player, Pair<Long, Runnable>> playerTasks = new WeakHashMap<>();
-    public static Main instance;
+    public static Main INSTANCE;
     public DatabaseSingleton db = DatabaseSingleton.getInstance();
     private DB _db;
     private final WeakHashMap<Player, Long> delays = new WeakHashMap<>();
     private BukkitTask countdownTask;
 
+    {
+        INSTANCE = this;
+    }
+
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onEnable() {
-        instance = this;
         try {
             if (!getDataFolder().exists()) getDataFolder().mkdir();
             _db = Iq80DBFactory.factory.open(new File(getDataFolder(), "database"),
@@ -183,9 +186,5 @@ public final class Main extends JavaPlugin {
             return null;
         }
         return p;
-    }
-
-    public static Main getInstance() {
-        return instance;
     }
 }
