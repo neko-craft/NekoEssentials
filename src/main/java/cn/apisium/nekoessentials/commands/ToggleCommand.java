@@ -1,6 +1,7 @@
 package cn.apisium.nekoessentials.commands;
 
 import cn.apisium.nekoessentials.Main;
+import cn.apisium.nekoessentials.utils.DatabaseSingleton;
 import cn.apisium.nekoessentials.utils.Serializer;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
@@ -18,13 +19,13 @@ public final class ToggleCommand extends BasicCommand {
         final Player p = (Player) sender;
         switch (p.getGameMode()) {
             case SURVIVAL:
-                instance.db.setPlayerData(p, "toggleLocation", Serializer.serializeLocation(p.getLocation()));
+                DatabaseSingleton.INSTANCE.setPlayerData(p, "toggleLocation", Serializer.serializeLocation(p.getLocation()));
                 p.setGameMode(GameMode.SPECTATOR);
                 break;
             case SPECTATOR:
-                final byte[] bytes = instance.db.getPlayerData(p, "toggleLocation");
+                final byte[] bytes = DatabaseSingleton.INSTANCE.getPlayerData(p, "toggleLocation");
                 if (bytes != null) {
-                    instance.db.deletePlayerData(p, "toggleLocation");
+                    DatabaseSingleton.INSTANCE.deletePlayerData(p, "toggleLocation");
                     p.teleport(Serializer.deserializeLocation(bytes));
                 }
                 p.setGameMode(GameMode.SURVIVAL);

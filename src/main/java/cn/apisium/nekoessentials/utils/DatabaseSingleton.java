@@ -10,18 +10,16 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("unused")
 public class DatabaseSingleton implements DB {
-    private static final DatabaseSingleton INSTANCE = new DatabaseSingleton();
-    private DB _db;
+    public static final DatabaseSingleton INSTANCE = new DatabaseSingleton();
+    private static DB db;
 
     private DatabaseSingleton() {
     }
 
-    public void init(DB _db) {
-        this._db = _db;
-    }
+    public DB getDatabase() { return db; }
 
-    public static DatabaseSingleton getInstance() {
-        return INSTANCE;
+    public static void init(DB db) {
+        DatabaseSingleton.db = db;
     }
 
     public byte[] getPlayerData(Player player, String key) {
@@ -70,102 +68,108 @@ public class DatabaseSingleton implements DB {
 
     @Override
     public byte[] get(byte[] key) throws DBException {
-        return _db.get(key);
+        return db.get(key);
     }
 
     @Override
     public byte[] get(byte[] key, ReadOptions options) throws DBException {
-        return _db.get(key, options);
+        return db.get(key, options);
     }
 
     @SuppressWarnings("NullableProblems")
     @Override
     public DBIterator iterator() {
-        return _db.iterator();
+        return db.iterator();
     }
 
     @Override
     public void forEach(Consumer<? super Map.Entry<byte[], byte[]>> action) {
-        _db.forEach(action);
+        db.forEach(action);
     }
 
     @Override
     public Spliterator<Map.Entry<byte[], byte[]>> spliterator() {
-        return _db.spliterator();
+        return db.spliterator();
     }
 
     @Override
     public DBIterator iterator(ReadOptions options) {
-        return _db.iterator(options);
+        return db.iterator(options);
     }
 
     @Override
     public void put(byte[] key, byte[] value) throws DBException {
-        _db.put(key, value);
+        db.put(key, value);
     }
 
     @Override
     public void delete(byte[] key) throws DBException {
-        _db.delete(key);
+        db.delete(key);
     }
 
     @Override
     public void write(WriteBatch updates) throws DBException {
-        _db.write(updates);
+        db.write(updates);
     }
 
     @Override
     public WriteBatch createWriteBatch() {
-        return _db.createWriteBatch();
+        return db.createWriteBatch();
     }
 
     @Override
     public Snapshot put(byte[] key, byte[] value, WriteOptions options) throws DBException {
-        return _db.put(key, value, options);
+        return db.put(key, value, options);
     }
 
     @Override
     public Snapshot delete(byte[] key, WriteOptions options) throws DBException {
-        return _db.delete(key, options);
+        return db.delete(key, options);
     }
 
     @Override
     public Snapshot write(WriteBatch updates, WriteOptions options) throws DBException {
-        return _db.write(updates, options);
+        return db.write(updates, options);
     }
 
     @Override
     public Snapshot getSnapshot() {
-        return _db.getSnapshot();
+        return db.getSnapshot();
     }
 
     @Override
     public long[] getApproximateSizes(Range... ranges) {
-        return _db.getApproximateSizes(ranges);
+        return db.getApproximateSizes(ranges);
     }
 
     @Override
     public String getProperty(String name) {
-        return _db.getProperty(name);
+        return db.getProperty(name);
     }
 
     @Override
     public void suspendCompactions() throws InterruptedException {
-        _db.suspendCompactions();
+        db.suspendCompactions();
     }
 
     @Override
     public void resumeCompactions() {
-        _db.resumeCompactions();
+        db.resumeCompactions();
     }
 
     @Override
     public void compactRange(byte[] begin, byte[] end) throws DBException {
-        _db.compactRange(begin, end);
+        db.compactRange(begin, end);
     }
 
     @Override
     public void close() throws IOException {
-        _db.close();
+        DatabaseSingleton.closeDatabase();
+    }
+
+    public static void closeDatabase() throws IOException {
+        if (db == null) return;
+        db.close();
+        db = null;
     }
 }

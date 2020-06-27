@@ -1,6 +1,7 @@
 package cn.apisium.nekoessentials.commands;
 
 import cn.apisium.nekoessentials.Main;
+import cn.apisium.nekoessentials.utils.DatabaseSingleton;
 import cn.apisium.nekoessentials.utils.Serializer;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -21,7 +22,7 @@ public final class MuteCommand extends BasicCommand implements Listener {
     @SuppressWarnings("unchecked")
     public MuteCommand(Main main) {
         super(main);
-        final byte[] bytes = main.db.get(MUTED_LIST);
+        final byte[] bytes = DatabaseSingleton.INSTANCE.get(MUTED_LIST);
         HashSet<String> s = null;
         try {
             if (bytes != null) s = (HashSet<String>) Serializer.deserializeObject(bytes);
@@ -59,7 +60,7 @@ public final class MuteCommand extends BasicCommand implements Listener {
             if (p != null) p.sendMessage("¡ìcÄúÒÑ±»½ûÑÔ!");
         }
         try {
-            instance.db.set(MUTED_LIST, Serializer.serializeObject(set));
+            DatabaseSingleton.INSTANCE.set(MUTED_LIST, Serializer.serializeObject(set));
         } catch (IOException e) {
             e.printStackTrace();
         }

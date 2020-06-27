@@ -57,10 +57,7 @@ import java.util.WeakHashMap;
 public final class Main extends JavaPlugin {
     public final WeakHashMap<Player, Pair<Integer, Location>> countdowns = new WeakHashMap<>();
     public final WeakHashMap<Player, Pair<Long, Runnable>> playerTasks = new WeakHashMap<>();
-    @SuppressWarnings("CanBeFinal")
     public static Main INSTANCE;
-    public DatabaseSingleton db = DatabaseSingleton.getInstance();
-    private DB _db;
     private final WeakHashMap<Player, Long> delays = new WeakHashMap<>();
     private BukkitTask countdownTask;
 
@@ -73,14 +70,13 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         try {
             if (!getDataFolder().exists()) getDataFolder().mkdir();
-            _db = Iq80DBFactory.factory.open(new File(getDataFolder(), "database"),
-                    new Options().createIfMissing(true));
+            DatabaseSingleton.init(Iq80DBFactory.factory.open(new File(getDataFolder(), "database"),
+                    new Options().createIfMissing(true)));
         } catch (IOException e) {
             e.printStackTrace();
             setEnabled(false);
             return;
         }
-        db.init(_db);
         getServer().getPluginManager().registerEvents(new Events(this), this);
         try {
             Utils.loadCommands(
@@ -129,11 +125,10 @@ public final class Main extends JavaPlugin {
         countdowns.clear();
         playerTasks.clear();
         try {
-            if (db != null) _db.close();
+            DatabaseSingleton.closeDatabase();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        db = null;
         countdownTask = null;
     }
 
