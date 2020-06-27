@@ -1,6 +1,5 @@
 package cn.apisium.nekoessentials.commands;
 
-import cn.apisium.nekoessentials.Constants;
 import cn.apisium.nekoessentials.Main;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
