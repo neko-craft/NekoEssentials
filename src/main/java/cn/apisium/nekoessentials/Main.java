@@ -2,6 +2,8 @@ package cn.apisium.nekoessentials;
 
 import cn.apisium.nekoessentials.commands.*;
 import cn.apisium.nekoessentials.utils.*;
+import com.destroystokyo.paper.Title;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,7 +14,6 @@ import org.bukkit.plugin.java.annotation.permission.Permission;
 import org.bukkit.plugin.java.annotation.plugin.*;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import org.bukkit.scheduler.BukkitTask;
-import org.iq80.leveldb.DB;
 import org.iq80.leveldb.Options;
 import org.iq80.leveldb.impl.Iq80DBFactory;
 
@@ -137,12 +138,13 @@ public final class Main extends JavaPlugin {
     }
 
     public void delayTeleport(final Player player, Location loc, final boolean now) {
-        if (now || !shouldPlayerBeDelayed(player, loc)) {
+        final boolean safe = player.getGameMode() != GameMode.SURVIVAL || Utils.isSafeLocation(loc);
+        if (now || (!shouldPlayerBeDelayed(player) && safe)) {
             countdowns.put(player, new Pair<>(1, loc));
         } else {
             player.sendMessage(Constants.MESSAGE_HEADER);
-            if (Utils.isSafeLocation(loc)) {
-                player.sendMessage("  §c检测到目标位置可能不安全!");
+            if (!safe) {
+                player.sendTitle(new Title("§c危!", "§e检测到目标位置可能不安全!"));
                 loc.setY(loc.getWorld().getHighestBlockYAt(loc));
             }
             player.sendMessage(Constants.CANCEL_HUB);
@@ -164,10 +166,9 @@ public final class Main extends JavaPlugin {
         return countdowns.remove(player) != null;
     }
 
-    public boolean shouldPlayerBeDelayed(Player player, Location loc) {
+    public boolean shouldPlayerBeDelayed(Player player) {
         if (player.hasPermission("nekoess.immediate")) return false;
-        if (Utils.isSafeLocation(loc)) return true;
-        Long time = delays.get(player);
+        final Long time = delays.get(player);
         return time != null && time > System.currentTimeMillis();
     }
 
