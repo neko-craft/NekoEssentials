@@ -6,6 +6,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public final class Constants {
+    public static final String COMMAND_DESCRIPTION = "A NekoEssentials provided command.";
     public static final String WRONG_USAGE = "§c错误的命令用法!";
     public static final String NO_PERMISSION = "§c你没有权限来执行这个指令!";
     public static final String NO_SUCH_PLAYER = "§c没有这样的一个玩家!";

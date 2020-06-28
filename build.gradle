@@ -16,21 +16,12 @@ repositories {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
-//    maven {
-//        name = 'spigot'
-//        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-//    }
 }
-
-//configurations {
-//    provided
-//}
 
 dependencies {
     compileOnly 'org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT'
-    compileOnly 'com.destroystokyo.paper:paper-api:1.15.2-R0.1-SNAPSHOT'
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.1-R0.1-SNAPSHOT'
     compileOnly 'io.netty:netty-buffer:4.1.50.Final'
-    compileOnly 'com.google.guava:guava:29.0-jre'
 
     annotationProcessor 'org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT'
 
