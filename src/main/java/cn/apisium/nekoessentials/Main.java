@@ -51,6 +51,7 @@ import java.util.WeakHashMap;
 @Permission(name = "nekoess.toggle", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.tpaall", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.others")
+@Permission(name = "nekoess.sudo.avoid")
 @Permission(name = "nekoess.immediate")
 @Permission(name = "nekoess.sudo")
 @Permission(name = "nekoess.mute")
