@@ -16,7 +16,7 @@ public final class SetHomeCommand extends BasicCommand {
     public boolean callback(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) return false;
         final Player p = (Player) sender;
-        DatabaseSingleton.INSTANCE.setPlayerData(p, ".home", Serializer.serializeLocation(p.getLocation()));
+        DatabaseSingleton.INSTANCE.setPlayerData(p, "home", Serializer.serializeLocation(p.getLocation()));
         p.sendMessage("°Ïa≥…π¶…Ë÷√!");
         return true;
     }
