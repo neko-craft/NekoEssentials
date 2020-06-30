@@ -50,7 +50,8 @@ public final class DbCommand extends BasicCommand {
                     sender.sendMessage(player.getName() + ":");
                     DatabaseSingleton.INSTANCE.filter(i -> asString(i.getKey()).startsWith(player.getUniqueId().toString())).forEach(it -> {
                         String key = asString(it.getKey()).split("\\.")[1];
-                        String value = asString(it.getValue());
+                        byte[] bytes = it.getValue();
+                        String value = isLocation(key)?Serializer.deserializeLocation(bytes).toString():asString(bytes);
                         sender.sendMessage("  " + key + " = " + value);
                     });
                     return true;
