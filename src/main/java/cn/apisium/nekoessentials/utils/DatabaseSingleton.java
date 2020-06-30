@@ -4,9 +4,11 @@ import org.bukkit.entity.Player;
 import org.iq80.leveldb.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Spliterator;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 @SuppressWarnings("unused")
 public class DatabaseSingleton implements DB {
@@ -64,6 +66,20 @@ public class DatabaseSingleton implements DB {
 
     public void delete(String key, WriteOptions writeOptions) {
         delete(key.getBytes(), writeOptions);
+    }
+
+    public ArrayList<Map.Entry<byte[], byte[]>> filter(Function<Map.Entry<byte[], byte[]>, Boolean> fun) {
+        DBIterator iterator = iterator();
+        ArrayList<Map.Entry<byte[], byte[]>> list = new ArrayList<>();
+        for (iterator.seekToFirst(); iterator.hasNext(); iterator.next()) {
+            if (fun.apply(iterator.peekNext())) list.add(iterator.peekNext());
+        }
+        try {
+            iterator.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     @Override

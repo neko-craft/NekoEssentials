@@ -13,7 +13,7 @@ public final class CancelCommand extends BasicCommand {
     @Override
     public boolean callback(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) return false;
-        sender.sendMessage(instance.cancelTeleport((Player) sender) ? "§e传送任务已被取消!" : "§c当前没有传送任务!");
+        sender.sendMessage(instance.cancelTeleport((Player) sender) ? "§e已取消传送!" : "§c当前没有待处理的传送请求!");
         return true;
     }
 }
