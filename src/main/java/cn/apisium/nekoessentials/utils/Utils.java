@@ -5,8 +5,7 @@ import cn.apisium.nekoessentials.Main;
 import cn.apisium.nekoessentials.commands.BasicCommand;
 import cn.apisium.nekoessentials.commands.CommandName;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Entity;
@@ -34,17 +33,19 @@ public final class Utils {
     }
 
     @SuppressWarnings("deprecation")
-    public static boolean isSafeLocation(Location location) {
-        final Block feet = location.getBlock();
-        if (!feet.getType().isTransparent() && !feet.getLocation().add(0, 1, 0).getBlock().getType().isTransparent()) {
-            return true;
+    public static boolean isSafeLocation(Location loc) {
+        if (loc.getY() < 0.6 || !loc.add(0, 1, 0).getBlock().getType().isTransparent()) {
+            return false;
         }
-        final Block head = feet.getRelative(BlockFace.UP);
-        if (!head.getType().isTransparent()) {
-            return true;
+        int i = 0;
+        while (i++ < 7) {
+            final Material b = loc.getBlock().getType();
+            if (b == Material.WATER || b.isSolid()) return true;
+            final int y = loc.getBlockY();
+            if (y == 0) return false;
+            loc.setY(y - 1);
         }
-        final Block ground = feet.getRelative(BlockFace.DOWN);
-        return !ground.getType().isSolid();
+        return false;
     }
 
     public static boolean canTeleportOthers(CommandSender who) {
