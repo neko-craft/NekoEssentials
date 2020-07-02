@@ -32,20 +32,14 @@ public final class Utils {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    public static boolean isSafeLocation(Location loc) {
-        if (loc.getY() < 0.6 || !loc.add(0, 1, 0).getBlock().getType().isTransparent()) {
-            return false;
-        }
-        int i = 0;
-        while (i++ < 7) {
+    public static Location findSafeLocation(Location loc) {
+        int y = loc.getBlockY();
+        while (y > 0) {
             final Material b = loc.getBlock().getType();
-            if (b == Material.WATER || b.isSolid()) return true;
-            final int y = loc.getBlockY();
-            if (y == 0) return false;
-            loc.setY(y - 1);
+            if (b == Material.WATER || b.isSolid()) return loc;
+            loc.setY(--y);
         }
-        return false;
+        return null;
     }
 
     public static boolean canTeleportOthers(CommandSender who) {

@@ -61,6 +61,7 @@ import java.util.WeakHashMap;
 public final class Main extends JavaPlugin {
     public final WeakHashMap<Player, Pair<Integer, Location>> countdowns = new WeakHashMap<>();
     public final WeakHashMap<Player, Pair<Long, Runnable>> playerTasks = new WeakHashMap<>();
+    public final WeakHashMap<Player, Pair<Location, Long>> afkPlayers = new WeakHashMap<>();
     public static Main INSTANCE;
     private final WeakHashMap<Player, Long> delays = new WeakHashMap<>();
     private BukkitTask countdownTask;
@@ -142,12 +143,17 @@ public final class Main extends JavaPlugin {
     }
 
     public void delayTeleport(final Player player, Location loc, final boolean now) {
-        final boolean safe = player.getGameMode() != GameMode.SURVIVAL || Utils.isSafeLocation(loc);
-        if (now || (!shouldPlayerBeDelayed(player) && safe)) {
+        boolean isSafe = true;
+        if (player.getGameMode() == GameMode.SURVIVAL) {
+            final Location temp = Utils.findSafeLocation(loc);
+            if (temp == null) isSafe = false;
+            else loc = temp;
+        }
+        if (now || (!shouldPlayerBeDelayed(player) && isSafe)) {
             countdowns.put(player, new Pair<>(1, loc));
         } else {
             player.sendMessage(Constants.MESSAGE_HEADER);
-            if (!safe) {
+            if (!isSafe) {
                 player.sendTitle(new Title("§c危!", "§e检测到目标位置可能不安全!"));
                 loc.setY(loc.getWorld().getHighestBlockYAt(loc));
             }

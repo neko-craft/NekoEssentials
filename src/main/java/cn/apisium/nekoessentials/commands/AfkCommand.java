@@ -11,12 +11,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 
-import java.util.WeakHashMap;
-
 @CommandName("afk")
 public final class AfkCommand extends TeleportCommand implements Listener {
     private final int TIME = 5 * 60 * 1000;
-    private final WeakHashMap<Player, Pair<Location, Long>> map = new WeakHashMap<>();
 
     public AfkCommand(Main main) {
         super(main);
@@ -26,11 +23,11 @@ public final class AfkCommand extends TeleportCommand implements Listener {
 
     @Override
     public void doTeleport(CommandSender sender, Player p, boolean now) {
-        Pair<Location, Long> it = map.get(p);
+        Pair<Location, Long> it = instance.afkPlayers.get(p);
         final long time = System.currentTimeMillis();
         if (it == null) {
             it = new Pair<>(p.getLocation(), time - TIME);
-            map.put(p, it);
+            instance.afkPlayers.put(p, it);
         } else it.right = it.right > time ? time - TIME : time + TIME;
         syncStatus(p, time);
         sender.sendMessage("°Ïa…Ë÷√≥…π¶!");
@@ -84,10 +81,10 @@ public final class AfkCommand extends TeleportCommand implements Listener {
     }
 
     private void renewStatus(Player p) {
-        Pair<Location, Long> it = map.get(p);
+        Pair<Location, Long> it = instance.afkPlayers.get(p);
         if (it == null) {
             it = new Pair<>(p.getLocation(), System.currentTimeMillis() + TIME);
-            map.put(p, it);
+            instance.afkPlayers.put(p, it);
         } else it.right = System.currentTimeMillis() + TIME;
     }
 
@@ -96,11 +93,11 @@ public final class AfkCommand extends TeleportCommand implements Listener {
     }
 
     private void syncStatus(final Player p, final long time) {
-        Pair<Location, Long> it = map.get(p);
+        Pair<Location, Long> it = instance.afkPlayers.get(p);
         final Location loc = p.getLocation();
         if (it == null) {
             it = new Pair<>(loc, time + TIME);
-            map.put(p, it);
+            instance.afkPlayers.put(p, it);
         } else if (loc.getWorld() != it.left.getWorld() || loc.distance(it.left) > 0.0001) {
             it.left = loc;
             it.right = time + TIME;
