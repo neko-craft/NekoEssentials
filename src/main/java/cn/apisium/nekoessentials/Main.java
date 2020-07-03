@@ -35,6 +35,7 @@ import java.util.WeakHashMap;
 @Command(name = "othershome", permission = "nekoess.others")
 @Command(name = "sethome", permission = "nekoess.home")
 @Command(name = "spawn", permission = "nekoess.spawn")
+@Command(name = "status", permission = "nekoess.status")
 @Command(name = "sudo", permission = "nekoess.sudo")
 @Command(name = "toggle", permission = "nekoess.toggle")
 @Command(name = "tpaall", permission = "nekoess.tpaall")
@@ -51,6 +52,7 @@ import java.util.WeakHashMap;
 @Permission(name = "nekoess.back", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.toggle", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.tpaall", defaultValue = PermissionDefault.TRUE)
+@Permission(name = "nekoess.status", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.others")
 @Permission(name = "nekoess.sudo.avoid")
 @Permission(name = "nekoess.immediate")
@@ -94,6 +96,7 @@ public final class Main extends JavaPlugin {
                     OthersHomeCommand.class,
                     SetHomeCommand.class,
                     SpawnCommand.class,
+                    StatusCommand.class,
                     SudoCommand.class,
                     ToggleCommand.class,
                     TpaAllCommand.class,
