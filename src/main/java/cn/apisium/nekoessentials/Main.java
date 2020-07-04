@@ -19,6 +19,7 @@ import org.iq80.leveldb.impl.Iq80DBFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -29,6 +30,8 @@ import java.util.WeakHashMap;
 @Website("https://apisium.cn")
 @Command(name = "afk", permission = "nekoess.afk")
 @Command(name = "back", permission = "nekoess.back")
+@Command(name = "db", permission = "nekoess.db")
+@Command(name = "disrobe", permission = "nekoess.disrobe")
 @Command(name = "tpcancel")
 @Command(name = "home", permission = "nekoess.home")
 @Command(name = "mute", permission = "nekoess.mute")
@@ -43,7 +46,6 @@ import java.util.WeakHashMap;
 @Command(name = "tpa", permission = "nekoess.tpa")
 @Command(name = "tpdeny")
 @Command(name = "tphere", permission = "nekoess.tphere")
-@Command(name = "db", permission = "nekoess.db")
 @Permission(name = "nekoess.afk", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.spawn", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.home", defaultValue = PermissionDefault.TRUE)
@@ -53,6 +55,7 @@ import java.util.WeakHashMap;
 @Permission(name = "nekoess.toggle", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.tpaall", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.status", defaultValue = PermissionDefault.TRUE)
+@Permission(name = "nekoess.disrobe", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.others")
 @Permission(name = "nekoess.sudo.avoid")
 @Permission(name = "nekoess.immediate")
@@ -65,6 +68,7 @@ public final class Main extends JavaPlugin {
     public final WeakHashMap<Player, Pair<Long, Runnable>> playerTasks = new WeakHashMap<>();
     public final WeakHashMap<Player, Pair<Location, Long>> afkPlayers = new WeakHashMap<>();
     public static Main INSTANCE;
+    public final HashSet<String> mutedPlayers = new HashSet<>();
     private final WeakHashMap<Player, Long> delays = new WeakHashMap<>();
     private BukkitTask countdownTask;
 
@@ -91,6 +95,8 @@ public final class Main extends JavaPlugin {
                     AfkCommand.class,
                     BackCommand.class,
                     CancelCommand.class,
+                    DbCommand.class,
+                    DisrobeCommand.class,
                     HomeCommand.class,
                     MuteCommand.class,
                     OthersHomeCommand.class,
@@ -103,8 +109,7 @@ public final class Main extends JavaPlugin {
                     TpAcceptCommand.class,
                     TpaCommand.class,
                     TpDenyCommand.class,
-                    TpHereCommand.class,
-                    DbCommand.class
+                    TpHereCommand.class
             );
         } catch (Exception e) {
             e.printStackTrace();

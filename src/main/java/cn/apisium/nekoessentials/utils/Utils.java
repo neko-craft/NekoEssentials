@@ -36,7 +36,11 @@ public final class Utils {
         int y = loc.getBlockY();
         while (y > 0) {
             final Material b = loc.getBlock().getType();
-            if (b == Material.WATER || b.isSolid()) return loc;
+            if (b == Material.WATER || b.isSolid()) {
+                loc.setY(y + 1);
+                return loc;
+            }
+            if (b == Material.LAVA) break;
             loc.setY(--y);
         }
         return null;
