@@ -22,13 +22,11 @@ public final class MuteCommand extends BasicCommand implements Listener {
     public MuteCommand(Main main) {
         super(main);
         final byte[] bytes = DatabaseSingleton.INSTANCE.get(MUTED_LIST);
-        HashSet<String> s = null;
-        try {
-            if (bytes != null) s = (HashSet<String>) Serializer.deserializeObject(bytes);
+        if (bytes != null) try {
+            main.mutedPlayers.addAll((HashSet<String>) Serializer.deserializeObject(bytes));
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        instance.mutedPlayers.addAll(s);
         main.getServer().getPluginManager().registerEvents(this, main);
     }
 

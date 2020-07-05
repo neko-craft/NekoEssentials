@@ -19,11 +19,9 @@ public final class DisrobeCommand extends TeleportCommand {
         final PlayerInventory pi = p.getInventory();
         final World world = p.getWorld();
         final Location loc = p.getLocation();
-        for (final ItemStack it : pi.getArmorContents()) {
-            if (it == null) continue;
-            world.dropItem(loc, it);
-            pi.remove(it);
-        }
+        for (final ItemStack it : pi.getArmorContents()) if (it != null) world.dropItem(loc, it);
+        pi.setArmorContents(new ItemStack[4]);
+        p.updateInventory();
         sender.sendMessage("¡ìa²Ù×÷³É¹¦!");
     }
 }
