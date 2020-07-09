@@ -17,7 +17,7 @@ public final class Constants {
     public static final BaseComponent[] REQUEST_HUB = new BaseComponent[4];
 
     static {
-        CANCEL_HUB[0] = new TextComponent("  §d正在传送中... §7传送中禁止移动, 如需取消请点击下面的文字:\n");
+        CANCEL_HUB[0] = new TextComponent("  §d正在传送中...\n  §7传送中禁止移动, 如需取消请点击下面的文字:\n");
         CANCEL_HUB[1] = new TextComponent("                  ");
         TextComponent t = new TextComponent("[取消传送]");
         t.setColor(ChatColor.RED);

@@ -161,15 +161,12 @@ public final class Main extends JavaPlugin {
             countdowns.put(player, new Pair<>(1, loc));
         } else {
             player.sendMessage(Constants.MESSAGE_HEADER);
-            if (!isSafe) {
-                player.sendTitle(new Title("§c危!", "§e检测到目标位置可能不安全!"));
-                loc.setY(loc.getWorld().getHighestBlockYAt(loc));
-            }
+            if (!isSafe) player.sendTitle(new Title("§c危!", "§e检测到目标位置可能不安全!"));
             player.sendMessage(Constants.CANCEL_HUB);
             player.sendMessage(Constants.MESSAGE_FOOTER);
-            delays.put(player, System.currentTimeMillis() + 2 * 1000 * 60);
-            countdowns.put(player, new Pair<>(15, loc));
+            countdowns.put(player, new Pair<>(10, loc));
         }
+        if (!now) delays.put(player, System.currentTimeMillis() + 2 * 1000 * 60);
     }
 
     public void requestTeleport(Player player, String message, Runnable fn) {
