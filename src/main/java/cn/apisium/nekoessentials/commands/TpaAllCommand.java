@@ -17,7 +17,7 @@ public final class TpaAllCommand extends BasicCommand {
         final String str = "  §d玩家 §f" + sp.getName() + " §d希望传送到你这里:";
         instance.getServer().getOnlinePlayers().forEach(it -> instance.requestTeleport(it, str,
                 () -> instance.delayTeleport(sp, sp.getLocation())));
-        sp.sendMessage("§a成功向玩家发送传送请求!");
+        sender.sendMessage("§a成功向玩家发送传送请求!");
         return true;
     }
 }

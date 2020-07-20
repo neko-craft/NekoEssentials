@@ -18,7 +18,7 @@ public final class TpHereCommand extends BasicCommand {
         if (p == null) return true;
         instance.requestTeleport(p, "  §d玩家 §f" + sp.getName() + " §d希望你传送到他那里:",
                 () -> instance.delayTeleport(p, sp.getLocation()));
-        p.sendMessage("§a成功向玩家发送传送请求!");
+        sender.sendMessage("§a成功向玩家发送传送请求!");
         return true;
     }
 }
