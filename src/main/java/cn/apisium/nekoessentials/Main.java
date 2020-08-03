@@ -5,6 +5,7 @@ import cn.apisium.nekoessentials.utils.*;
 import com.destroystokyo.paper.Title;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
@@ -127,6 +128,7 @@ public final class Main extends JavaPlugin {
                     final Location dest = pair.right;
                     if (dest == null) continue;
                     Utils.teleportPlayer(p, dest);
+                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                     p.sendActionBar("§a传送成功!");
                 } else p.sendActionBar("§e将在 §b" + pair.left + "秒 §e后进行传送!");
             }
@@ -198,5 +200,11 @@ public final class Main extends JavaPlugin {
             return null;
         }
         return p;
+    }
+
+    @SuppressWarnings("unused")
+    public boolean isAfking(final Player player) {
+        final Pair<Location, Long> pair = afkPlayers.get(player);
+        return pair != null && pair.right < System.currentTimeMillis();
     }
 }

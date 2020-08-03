@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandName("spawn")
-public final class SpawnCommand extends TeleportCommand {
+public final class SpawnCommand extends TargetCommand {
     @SuppressWarnings("ConstantConditions")
     private final Location spawn = instance.getServer().getWorld("world").getSpawnLocation();
 
@@ -15,7 +15,7 @@ public final class SpawnCommand extends TeleportCommand {
     }
 
     @Override
-    public void doTeleport(CommandSender sender, Player p, boolean now) {
+    public void doAction(CommandSender sender, Player p, boolean now) {
         instance.delayTeleport(p, spawn, now);
     }
 }

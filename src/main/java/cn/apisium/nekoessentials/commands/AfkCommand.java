@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 
 @CommandName("afk")
-public final class AfkCommand extends TeleportCommand implements Listener {
+public final class AfkCommand extends TargetCommand implements Listener {
     private final int TIME = 5 * 60 * 1000;
 
     public AfkCommand(Main main) {
@@ -22,7 +22,7 @@ public final class AfkCommand extends TeleportCommand implements Listener {
     }
 
     @Override
-    public void doTeleport(CommandSender sender, Player p, boolean now) {
+    public void doAction(CommandSender sender, Player p, boolean now) {
         Pair<Location, Long> it = instance.afkPlayers.get(p);
         final long time = System.currentTimeMillis();
         if (it == null) {
