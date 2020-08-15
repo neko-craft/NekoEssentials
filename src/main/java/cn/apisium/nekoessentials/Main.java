@@ -47,6 +47,7 @@ import java.util.WeakHashMap;
 @Command(name = "tpa", permission = "nekoess.tpa")
 @Command(name = "tpdeny")
 @Command(name = "tphere", permission = "nekoess.tphere")
+@Command(name = "freeze", permission = "nekoess.freeze")
 @Permission(name = "nekoess.afk", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.spawn", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.home", defaultValue = PermissionDefault.TRUE)
@@ -63,6 +64,7 @@ import java.util.WeakHashMap;
 @Permission(name = "nekoess.sudo")
 @Permission(name = "nekoess.mute")
 @Permission(name = "nekoess.db")
+@Permission(name = "nekoess.freeze")
 @ApiVersion(ApiVersion.Target.v1_13)
 public final class Main extends JavaPlugin {
     public final WeakHashMap<Player, Pair<Integer, Location>> countdowns = new WeakHashMap<>();
@@ -98,6 +100,7 @@ public final class Main extends JavaPlugin {
                     CancelCommand.class,
                     DbCommand.class,
                     DisrobeCommand.class,
+                    FreezeCommand.class,
                     HomeCommand.class,
                     MuteCommand.class,
                     OthersHomeCommand.class,
