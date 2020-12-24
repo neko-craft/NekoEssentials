@@ -23,7 +23,7 @@ public final class SudoCommand extends BasicCommand {
             return true;
         }
         sender.sendMessage(p.performCommand(StringUtils.join(
-                Arrays.copyOfRange(args, 1, args.length))) ? "§a执行成功!" : "§c执行失败!");
+                Arrays.copyOfRange(args, 1, args.length), ' ')) ? "§a执行成功!" : "§c执行失败!");
         return true;
     }
 }
