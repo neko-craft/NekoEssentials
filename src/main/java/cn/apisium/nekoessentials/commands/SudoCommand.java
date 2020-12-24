@@ -1,7 +1,6 @@
 package cn.apisium.nekoessentials.commands;
 
 import cn.apisium.nekoessentials.Main;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,8 +21,7 @@ public final class SudoCommand extends BasicCommand {
             sender.sendMessage("§c不能在目标玩家上执行当前指令!");
             return true;
         }
-        sender.sendMessage(p.performCommand(StringUtils.join(
-                Arrays.copyOfRange(args, 1, args.length))) ? "§a执行成功!" : "§c执行失败!");
+        sender.sendMessage(p.performCommand(String.join(" ", Arrays.copyOfRange(args, 1, args.length))) ? "§a执行成功!" : "§c执行失败!");
         return true;
     }
 }
