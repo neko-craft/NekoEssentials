@@ -1,11 +1,8 @@
 package cn.apisium.nekoessentials.commands;
 
 import cn.apisium.nekoessentials.Main;
-import cn.apisium.nekoessentials.utils.DatabaseSingleton;
-import cn.apisium.nekoessentials.utils.Serializer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 

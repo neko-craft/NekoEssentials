@@ -20,10 +20,7 @@ import org.iq80.leveldb.impl.Iq80DBFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.WeakHashMap;
+import java.util.*;
 
 @Plugin(name = "NekoEssentials", version = "1.0")
 @Description("An essential plugin used in NekoCraft.")
@@ -32,12 +29,15 @@ import java.util.WeakHashMap;
 @Command(name = "afk", permission = "nekoess.afk")
 @Command(name = "back", permission = "nekoess.back")
 @Command(name = "db", permission = "nekoess.db")
+@Command(name = "delwarp", permission = "nekoess.warp.del")
 @Command(name = "disrobe", permission = "nekoess.disrobe")
 @Command(name = "tpcancel")
 @Command(name = "home", permission = "nekoess.home")
+@Command(name = "warp", permission = "nekoess.warp")
 @Command(name = "mute", permission = "nekoess.mute")
 @Command(name = "othershome", permission = "nekoess.others")
 @Command(name = "sethome", permission = "nekoess.home")
+@Command(name = "setwarp", permission = "nekoess.warp.set")
 @Command(name = "spawn", permission = "nekoess.spawn")
 @Command(name = "status", permission = "nekoess.status")
 @Command(name = "sudo", permission = "nekoess.sudo")
@@ -70,8 +70,10 @@ public final class Main extends JavaPlugin {
     public final WeakHashMap<Player, Pair<Integer, Location>> countdowns = new WeakHashMap<>();
     public final WeakHashMap<Player, Pair<Long, Runnable>> playerTasks = new WeakHashMap<>();
     public final WeakHashMap<Player, Pair<Location, Long>> afkPlayers = new WeakHashMap<>();
+    @SuppressWarnings("CanBeFinal")
     public static Main INSTANCE;
     public final HashSet<String> mutedPlayers = new HashSet<>();
+    public final HashSet<String> warps = new HashSet<>();
     private final WeakHashMap<Player, Long> delays = new WeakHashMap<>();
     private BukkitTask countdownTask;
 
@@ -99,12 +101,15 @@ public final class Main extends JavaPlugin {
                     BackCommand.class,
                     CancelCommand.class,
                     DbCommand.class,
+                    DelWarpCommand.class,
                     DisrobeCommand.class,
                     FreezeCommand.class,
                     HomeCommand.class,
                     MuteCommand.class,
                     OthersHomeCommand.class,
+                    WarpCommand.class,
                     SetHomeCommand.class,
+                    SetWarpCommand.class,
                     SpawnCommand.class,
                     StatusCommand.class,
                     SudoCommand.class,
