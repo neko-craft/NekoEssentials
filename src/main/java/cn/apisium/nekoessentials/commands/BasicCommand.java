@@ -24,13 +24,8 @@ public abstract class BasicCommand implements CommandExecutor, TabCompleter {
     @SuppressWarnings("NullableProblems")
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return tabComplete(sender, args);
+        return null;
     }
 
     public abstract boolean callback(CommandSender sender, String[] args);
-
-    @SuppressWarnings({"unused", "SameReturnValue"})
-    public List<String> tabComplete(CommandSender sender, String[] args) {
-        return null;
-    }
 }
