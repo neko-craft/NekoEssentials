@@ -19,10 +19,10 @@ public final class SetHomeCommand extends BasicCommand {
         final Player p = (Player) sender;
         if (p.getGameMode() == GameMode.SPECTATOR) {
             p.sendMessage("§c你不能在旁观模式设置家!");
-            return false;
+        } else {
+            DatabaseSingleton.INSTANCE.setPlayerData(p, "home", Serializer.serializeLocation(p.getLocation()));
+            p.sendMessage("§a成功设置家!");
         }
-        DatabaseSingleton.INSTANCE.setPlayerData(p, "home", Serializer.serializeLocation(p.getLocation()));
-        p.sendMessage("§a成功设置家!");
         return true;
     }
 }
