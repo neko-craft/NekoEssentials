@@ -58,6 +58,7 @@ import java.util.*;
 @Permission(name = "nekoess.tpaall", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.status", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.disrobe", defaultValue = PermissionDefault.TRUE)
+@Permission(name = "nekoess.warp", defaultValue = PermissionDefault.TRUE)
 @Permission(name = "nekoess.others")
 @Permission(name = "nekoess.sudo.avoid")
 @Permission(name = "nekoess.immediate")
