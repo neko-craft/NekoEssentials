@@ -1,13 +1,9 @@
-# This workflow will build a Java project with Gradle
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
-
-name: Java CI with Gradle
+name: Java CI
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  release:
+    types:
+      - created
 
 jobs:
   build:
@@ -31,10 +27,15 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/libs/NekoEssentials-1.0-SNAPSHOT.jar
+        asset_name: NekoEssentials.jar
+        tag: ${{ github.ref }}
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
       with:
-        # A file, directory or wildcard pattern that describes what to upload
         path: build/libs/*.jar
-        # Duration after which artifact will expire in days. 0 means using default retention. Minimum 1 day. Maximum 90 days unless changed from the repository settings page.
-        retention-days: 90 # optional
+        retention-days: 90
