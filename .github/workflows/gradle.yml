@@ -1,4 +1,4 @@
-name: Java CI
+name: Release
 
 on:
   release:
@@ -34,8 +34,3 @@ jobs:
         file: build/libs/NekoEssentials-1.0-SNAPSHOT.jar
         asset_name: NekoEssentials.jar
         tag: ${{ github.ref }}
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        path: build/libs/*.jar
-        retention-days: 90
